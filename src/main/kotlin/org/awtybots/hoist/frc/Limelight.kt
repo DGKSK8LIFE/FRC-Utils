@@ -72,7 +72,7 @@ class Limelight(val mountingHeight: Double, val mountingAngle: Double, val skewA
   /**
    * Set the mode of the LEDs (Default, Off, Blinking, On)
    */
-  fun setLEDMode(mode: LEDMode): Boolean = setNumber(TableEntry.LedMode,mode.ordinal)
+  fun setLEDMode(mode: LEDMode): Boolean = setNumber(TableEntry.LEDMode, mode.ordinal)
 
   /**
    * Gets the value of given entry in Limelight's table.
@@ -82,7 +82,6 @@ class Limelight(val mountingHeight: Double, val mountingAngle: Double, val skewA
    */
   private fun getValue(entry: TableEntry): Optional<Double> {
     val result: NetworkTableValue = netTable.getEntry( entry.getter ).value
-
     return if (result.type == NetworkTableType.kDouble)
       Optional.of(result.double)
     else
@@ -98,7 +97,7 @@ class Limelight(val mountingHeight: Double, val mountingAngle: Double, val skewA
    */
   private fun setNumber(entry: TableEntry, value: Number): Boolean {
     return if (entry.setter != "")
-      netTable .getEntry(entry.setter).setNumber(value)
+      netTable.getEntry(entry.setter).setNumber(value)
     else {
       false.also { println("No setter available for TableEntry") }
     }
@@ -115,8 +114,7 @@ class Limelight(val mountingHeight: Double, val mountingAngle: Double, val skewA
   }
 
   /**
-   * A series of enums used within the Limelight class to access
-   * various entries in the Limelight's [NetworkTable].
+   * Mappings to the Limelight's [NetworkTable] entries.
    */
   enum class TableEntry(val getter: String, val setter: String = "") {
     HasValidTargets("tv"),
@@ -127,6 +125,6 @@ class Limelight(val mountingHeight: Double, val mountingAngle: Double, val skewA
     PipelineLatency("tl"),
     CurrentPipeline("getpipe", "pipeline"),
     OperationMode("camMode", "camMode"),
-    LedMode("LEDMode", "LEDMode")
+    LEDMode("LEDMode", "LEDMode")
   }
 }
