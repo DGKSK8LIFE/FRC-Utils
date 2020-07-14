@@ -8,7 +8,7 @@ end
 
 desc "Generate release jar for latest tag"
 task :release do
-  version = %x(git tag --list | head -n 1)[0..-2]
+  version = %x(git tag --list).gsub("\n.*", "")
   puts "Creating release for tag: \'#{version}\'"
   sh "git checkout #{version} --quiet"
   puts "Building JAR"
