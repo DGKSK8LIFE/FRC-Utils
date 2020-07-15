@@ -9,10 +9,10 @@ repositories {
 }
 
 dependencies {
-  /// --- WPILib + Vendors --- ///
+  /// --- WPILib --- ///
   implementation wpi.deps.wpilib()
   nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
-
+  /// --- Vendor Libraries --- ///
   implementation wpi.deps.vendor.java()
   nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
   /// --- Kotlin stdlib --- ///
