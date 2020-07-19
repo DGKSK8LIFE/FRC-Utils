@@ -41,10 +41,12 @@ class Drivetrain<T : BaseTalon>(
     rightMotors.goalVelocity = right * config.kVelocityMax
   }
 
-  fun stop() {
+  fun kill() {
     setGoalVelocity(0.0, 0.0)
     setMotorOutput(0.0, 0.0)
   }
+
+  fun softStop() = setGoalVelocity(0.0, 0.0)
 
   fun resetSensors() {
     leftMotors.motorList.forEach { m -> m.setSelectedSensorPosition(0) }
