@@ -1,8 +1,6 @@
 package org.awtybots.hoist.frc
 
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.awtybots.hoist.frc.Controller
-import org.awtybots.hoist.frc.ControllerValues
 
 open class StreamCommand: CommandBase() {
 

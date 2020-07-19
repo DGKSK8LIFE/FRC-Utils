@@ -25,7 +25,7 @@ class Controller(port: Int) {
   val trgR = Button { getTriggerActive(Hand.kRight) }
 
   /**
-   * Stream controller inputs to a [command][StreamCommand] continuosly
+   * Stream controller inputs to a [command][StreamCommand] continuously
    * @param command  The command to send the controller inputs to
    */
   fun streamAnalogInputTo( command: StreamCommand ) {
