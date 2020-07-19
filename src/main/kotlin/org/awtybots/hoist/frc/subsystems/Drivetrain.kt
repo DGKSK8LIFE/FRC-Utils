@@ -1,97 +1,53 @@
 package org.awtybots.hoist.frc.subsystems
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.BaseTalon
+import edu.wpi.first.wpiutil.math.MathUtil.clamp
+import org.awtybots.hoist.frc.motors.MotorGroup
+import org.awtybots.hoist.frc.config.DriveConfig
+import kotlin.math.*
 
-import static edu.wpi.first.wpiutil.math.MathUtil.clamp;
-import kotlin.math
-
-class Drivetrain<T : BaseTalon>(leftMotors: Array<T>, rightMotors: Array<T>, private val config: DrivetrainConfig) {
-
-  private val allMotors = leftMotors + rightMotors
-  private val leftMotors: MotorGroup(leftMotors)
-  private val rightMotors: MotorGroup(rightMotors)
+class Drivetrain<T : BaseTalon>(
+    private val config: DriveConfig,
+    private val leftMotors: MotorGroup<T>,
+    private val rightMotors: MotorGroup<T>
+) {
 
   init {
-      allMotors.forEach { motor -> with(motor) {
-          configFactoryDefault()
-          configSelectedFeedbackSensor(config.kSelectedSensor)
-          setNeutralMode(NeutralMode.Coast)
-          configOpenloopRamp(1.0 / config.kPercentAccelerationMax)
-      } }
-
-      rightMotors.forEach { motor -> motor.setInverted(true) }
-  }
-
-  fun setMotorOutput(left: Double, right: Double) {
-    leftMotors.setMotorOutput(left)
-    rightMotors.setMotorOutput(right)
-  }
-
-  private class MotorGroup<T : BaseTalon>(private val motorList: Array<T>, private val kWheelDiameter: Double) {
-
-    private var integralError, lastVelocityError: Double
-
-    var goalVelocity: Double = 0.0
-      set(velocity) {
-        this.integralError = 0.0
-        this.lastVelocityError = 0.0
-        if/velocity < config.kVelocityMax && velocity > -config.kVelocityMax)
-          field = velocity
-        else
-          field = config.kVelocityMax
-      }
-
-    fun setMotorOutput(percent: Double) {
-      if (math.abs(percent) < config.kPercentMin)
-        percent = 0.0
-      else
-        percent = clamp(percent, -config.kPercentMax, config.kPercentMax)
-      motorList.forEach { m -> m.set(percent) }
+    val allMotors = MotorGroup(leftMotors.motorList + rightMotors.motorList, config)
+    allMotors.motorList.forEach { motor ->
+      motor.configFactoryDefault()
+      motor.configSelectedFeedbackSensor(config.kSelectedSensor)
+      motor.setNeutralMode(NeutralMode.Coast)
+      motor.configOpenloopRamp(1.0 / config.kPercentAccelerationMax)
     }
 
-    fun drivePID(): Double {
-      var currentVelocity = getWheelVelocity()
-      var goalAcceleration = goalVelocity - currentVelocity
-      var velocityError = clamp(
-        goalAcceleration,
-        -config.kAccelerationMax * 0.02,
-        config.kAccelerationMax * 0.02
-      )
-      var accelerationError = (velocityError - lastVelocityError) / 0.02
-      lastVelocityError = velocityError
-      integralError = clamp(
-        integralError + (velocityError * 0.02),
-        -config.kMaxIntegral / config.kI
-        config.kMaxIntegral / config.kI
-      )
-      setMotorOutput((config.kP * velocityError) + (config.kI * integralError) + (config.kD * accelerationError))
-    }
-
-    private fun getWheelVelocity() =
-        humanizeVelocity(motorList[0].getSelectedSensorVelocity())
-    
-    private fun getWheelDistance() =
-        humanizeDistance(motorList[0].getSelectedSensorPosition())
-
-    private fun humanizeVelocity(nativeVelocity: Double) =
-        nativeVelocity / 2048.0 * 10.0 * (config.kWheelDiameter * PI)
-
-    private fun humanizeDistance(nativeDistance: Double) =
-        nativeDistance / 2048.0 * 10.0 * (config.kWheelDiameter * PI)
+    rightMotors.motorList.forEach { motor -> motor.setInverted(true) }
   }
-  
+
+  fun setMotorOutput(left_: Double, right_: Double) {
+    val right = if (abs(right_) < config.kPercentMin) 0.0
+            else clamp(right_, -config.kPercentMax, config.kPercentMax)
+
+    val left = if (abs(left_) < config.kPercentMin) 0.0
+           else clamp(left_, -config.kPercentMax, config.kPercentMax)
+
+    leftMotors.setMotorOutput(left * config.kPercentMax)
+    rightMotors.setMotorOutput(right * config.kPercentMax)
+  }
+
+  fun setGoalVelocity(left: Double, right: Double) {
+    leftMotors.goalVelocity = left * config.kVelocityMax
+    rightMotors.goalVelocity = right * config.kVelocityMax
+  }
+
+  fun stop() {
+    setGoalVelocity(0.0, 0.0)
+    setMotorOutput(0.0, 0.0)
+  }
+
+  fun resetSensors() {
+    leftMotors.motorList.forEach { m -> m.setSelectedSensorPosition(0) }
+    rightMotors.motorList.forEach { m -> m.setSelectedSensorPosition(0) }
+  }
 }
-
-data class DrivetrainConfig(
-        val invertRight: Boolean,
-        val kPercentMin: Double,
-        val kPercentMax: Double,
-        val kPercentAccelerationMax: Double,
-        val kVelocityMax: Double,
-        val kAccelerationMax: Double,
-        val kSelectedSensor: FeedbackDevice,
-        val kWheelDiameter: Double,
-        val kP,kI,kD: Double
-)
