@@ -12,4 +12,5 @@ interface MotorController {
     fun configSelectedFeedbackSensor(dev: FeedbackDevice): ErrorCode
     fun setNeutralMode(mode: NeutralMode)
     fun configOpenloopRamp(secondsFromNeutralToFull: Double): ErrorCode
+    fun setInverted(invert: Boolean)
 }
