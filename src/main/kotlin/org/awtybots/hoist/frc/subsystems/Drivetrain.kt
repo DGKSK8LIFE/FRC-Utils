@@ -26,11 +26,8 @@ class Drivetrain<T : BaseTalon>(
   }
 
   fun setMotorOutput(left_: Double, right_: Double) {
-    val right = if (abs(right_) < config.kPercentMin) 0.0
-            else clamp(right_, -config.kPercentMax, config.kPercentMax)
-
-    val left = if (abs(left_) < config.kPercentMin) 0.0
-           else clamp(left_, -config.kPercentMax, config.kPercentMax)
+    val right = outputDeadzone(right_)
+    val left  = outputDeadzone(left_)
 
     leftMotors.setMotorOutput(left * config.kPercentMax)
     rightMotors.setMotorOutput(right * config.kPercentMax)
@@ -51,5 +48,11 @@ class Drivetrain<T : BaseTalon>(
   fun resetSensors() {
     leftMotors.motorList.forEach { m -> m.setSelectedSensorPosition(0) }
     rightMotors.motorList.forEach { m -> m.setSelectedSensorPosition(0) }
+  }
+  private fun outputDeadzone(x: Double): Double {
+    return if (abs(x) < config.kPercentMin)
+      0.0
+    else 
+      clamp(x, -config.kPercentMax, config.kPercentMax)
   }
 }
