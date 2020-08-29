@@ -29,7 +29,7 @@ class Controller(port: Int) {
    * @param command  The command to send the controller inputs to
    */
   fun streamAnalogInputTo( command: StreamCommand ) {
-    command.setController(this)
+    command.controller = this
     command.schedule()
   }
 
@@ -61,8 +61,10 @@ class Controller(port: Int) {
     JoystickButton(this.controller, buttonID)
 
   private fun deadzone( x: Double, dz: Double ): Double {
-    return if ( abs(x) < dz ) 0.0
-    else (x - dz * sign(x)) / (1.0 - dz)
+    return if ( abs(x) > dz )
+      (x - dz * sign(x)) / (1.0 - dz)
+    else
+      0.0
   }
 
 }
