@@ -1,13 +1,13 @@
 package org.awtybots.hoist.math
 
-import kotlin.math.PI
+import kotlin.math.*
 
-typealias Force Vector2
-typealias Acceleration Vector2
-typealias Velocity Vector2
-typealias Position Vector2
+typealias Force = Vector2
+typealias Acceleration = Vector2
+typealias Velocity = Vector2
+typealias Position  =Vector2
 
-class Simulation(val simulationStep: Double = 0.1, val simulationIterations: Int = 10, val ballRadius: Double, val ballMass: Double, val launchAngle: Double, val maxSpeed: Double = 50) {
+class Simulation(val simulationStep: Double = 0.1, val simulationIterations: Int = 10, val ballRadius: Double, val ballMass: Double, val launchAngle: Double, val maxSpeed: Double = 50.0) {
 
     fun findOptimalLaunchVelocity(goalPosition: Position) : Velocity? {
         var maxVelocity: Velocity = Velocity(r = maxSpeed, theta = launchAngle)
@@ -37,20 +37,21 @@ class Simulation(val simulationStep: Double = 0.1, val simulationIterations: Int
     private fun runSimulation(goalPosition: Position, launchVelocity: Velocity) : Double {
         var position = Position()
         var velocity = launchVelocity
-        var time = 0.0
 
-        while(position.x < goalPosition.x) {
+        while(position.x < goalPosition.x && sign(velocity.x) == sign(position.x)) {
+            position += velocity * simulationStep
+
             val netForce: Force = gravityForce + calculateDragForce(velocity)
             val acceleration: Acceleration = netForce / ballMass
+
             velocity += acceleration * simulationStep
-            time += simulationStep
         }
 
         return position.y
     }
 
     /// GRAVITY ///
-    const val g = -9.81
+    val g = -9.81
     val gravityForce = Force(0.0, ballMass * g)
 
 
@@ -58,9 +59,9 @@ class Simulation(val simulationStep: Double = 0.1, val simulationIterations: Int
     // Drag Force = 1/2 * p * C * A * v^2
 
     // p = density of fluid
-    const val dragP = 1.225
+    val dragP = 1.225
     // C = drag coefficient (might need to be measured)
-    const val dragC = 0.47
+    val dragC = 0.47
     // A = cross sectional area
     val dragA = ballRadius * ballRadius * PI
 
@@ -71,6 +72,6 @@ class Simulation(val simulationStep: Double = 0.1, val simulationIterations: Int
     private fun calculateDragForce(velocity: Velocity) : Force {
         val dragForceMagnitude = dragM * velocity.magnitude.pow(2)
         val dragForceTheta = velocity.theta + 180
-        return Force(r = dragForceMagnitude, theta = dragForceTheta)
+        return Force(dragForceMagnitude, dragForceTheta, polar = true)
     }
 }

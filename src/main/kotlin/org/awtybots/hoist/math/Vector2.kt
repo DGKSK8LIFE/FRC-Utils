@@ -1,7 +1,5 @@
 package org.awtybots.hoist.math
 
-import edu.wpi.first.wpilibj.geometry.Pose2d
-import edu.wpi.first.wpilibj.geometry.Translation2d
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import kotlin.math.*
 
@@ -9,13 +7,11 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
 
   constructor(n: Double): this(n, n)
   constructor(b: Vector2): this(b.x, b.y)
-  constructor(pose: Pose2d): this() {
-    this.x = pose.translation.x
-    this.y = pose.translation.y
-  }
-  constructor(r: Double, theta: Double): this() {
-    this.x = r * cos(theta)
-    this.y = r * sin(theta)
+  constructor(r: Double, theta: Double, polar: Boolean = true): this() {
+    if(polar) {
+      this.x = r * cos(theta)
+      this.y = r * sin(theta)
+    }
   }
 
   // vector can be represented by polar coords: magnitude * e^(i * theta)
@@ -27,7 +23,7 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
       applyUnaryFunction { m -> m * factor}
     }
 
-  val theta: Double
+  var theta: Double
     get() = floor((atan2(this.y,this.x) * (180/PI)) % 360)
     set(value) { // this math might be wrong
         val s: Double = sin(value * (PI/180))
@@ -42,15 +38,13 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
   fun normalize() { this.magnitude = 1.0 }
 
   fun dot(b: Vector2): Double {
-    with (this.mult(b)) {
+    with (this * b) {
       return this.x + this.y
     }
   }
 
   /// ---- Converters ---- ///
   fun clone(): Vector2 = Vector2(this)
-
-  fun toTranslation2d(): Translation2d = Translation2d(this.x, this.y)
 
   fun print(name: String): Vector2 {
     SmartDashboard.putString(name, this.toString())
@@ -67,6 +61,9 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
   operator fun minus(b: Vector2): Vector2 = applyBinaryFunction({ m,n -> m - n }, b)
   operator fun times(b: Vector2): Vector2 = applyBinaryFunction({ m,n -> m * n }, b)
   operator fun div(b: Vector2): Vector2 = applyBinaryFunction({ m,n -> m / n}, b)
+  operator fun plusAssign(b: Vector2) {
+    plus(b)
+  }
 
   operator fun times(n: Double): Vector2 = applyUnaryFunction { m -> m * n}
   operator fun div(n: Double): Vector2 = applyUnaryFunction { m -> m / n}
@@ -75,15 +72,11 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
 
   /// ---- Utilities ---- ////
   fun applyUnaryFunction(func: (Double) -> Double): Vector2 {
-    x = func(x)
-    y = func(y)
-    return this
+    return Vector2(func(x), func(y))
   }
 
   private fun applyBinaryFunction(func: (Double, Double) -> Double, b: Vector2): Vector2 {
-    this.x = func(this.x, b.x)
-    this.y = func(this.y, b.y)
-    return this
+    return Vector2(func(this.x, b.x), func(this.y, b.y))
   }
 
 }

@@ -25,7 +25,7 @@ class Vector3(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0) {
   fun normalize() { this.magnitude = 1.0 }
 
   fun dot(b: Vector3): Double {
-    with (this.mult(b)) {
+    with (this * b) {
       return this.x + this.y + this.z
     }
   }
