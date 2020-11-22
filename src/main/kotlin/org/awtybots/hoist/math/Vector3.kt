@@ -58,16 +58,13 @@ class Vector3(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0) {
   }
 
   /// ---- Operators ---- ///
-  fun invert() = applyFunction { m -> -m}
-  fun plus(b: Vector3): Vector3 = applyFunctionDouble({ m,n -> m + n }, b)
-  fun minus(b: Vector3): Vector3 = applyFunctionDouble({ m,n -> m - n }, b)
-  fun mult(b: Vector3): Vector3 = applyFunctionDouble({ m,n -> m * n }, b)
-  fun div(b: Vector3): Vector3 = applyFunctionDouble({ m,n -> m / n}, b)
+  operator fun plus(b: Vector3): Vector3 = applyFunctionDouble({ m,n -> m + n }, b)
+  operator fun minus(b: Vector3): Vector3 = applyFunctionDouble({ m,n -> m - n }, b)
+  operator fun times(b: Vector3): Vector3 = applyFunctionDouble({ m,n -> m * n }, b)
+  operator fun div(b: Vector3): Vector3 = applyFunctionDouble({ m,n -> m / n}, b)
 
-  fun plus(n: Double): Vector3 = applyFunction { m -> m + n}
-  fun minus(n: Double): Vector3 = applyFunction { m -> m - n}
-  fun mult(n: Double): Vector3 = applyFunction { m -> m * n}
-  fun div(n: Double): Vector3 = applyFunction { m -> m / n}
+  operator fun times(n: Double): Vector3 = applyFunction { m -> m * n}
+  operator fun div(n: Double): Vector3 = applyFunction { m -> m / n}
 
   /// ---- Utilities ---- ////
   fun applyFunction(func: (Double) -> Double): Vector3 {
