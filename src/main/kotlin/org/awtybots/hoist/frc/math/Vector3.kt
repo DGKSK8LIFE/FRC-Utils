@@ -1,4 +1,4 @@
-package org.awtybots.hoist.math
+package org.awtybots.hoist.frc.math
 
 import edu.wpi.first.wpilibj.geometry.Pose2d
 import edu.wpi.first.wpilibj.geometry.Translation2d

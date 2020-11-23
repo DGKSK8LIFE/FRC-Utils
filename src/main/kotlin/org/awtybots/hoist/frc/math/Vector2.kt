@@ -1,4 +1,4 @@
-package org.awtybots.hoist.math
+package org.awtybots.hoist.frc.math
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import kotlin.math.*
