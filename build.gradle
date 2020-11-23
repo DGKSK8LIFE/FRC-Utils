@@ -10,6 +10,10 @@ repositories {
   jcenter()
 }
 
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
   /// --- WPILib --- ///
   implementation wpi.deps.wpilib()
@@ -19,6 +23,9 @@ dependencies {
   nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
   /// --- Kotlin stdlib --- ///
   implementation "org.jetbrains.kotlin:kotlin-stdlib"
+  /// --- JUnit --- ///
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 }
 
 dokka {

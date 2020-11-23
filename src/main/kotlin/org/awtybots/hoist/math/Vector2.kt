@@ -9,8 +9,8 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
   constructor(b: Vector2): this(b.x, b.y)
   constructor(r: Double, theta: Double, polar: Boolean = true): this() {
     if(polar) {
-      this.x = r * cos(theta)
-      this.y = r * sin(theta)
+      this.x = r * cos(theta* (PI/180))
+      this.y = r * sin(theta* (PI/180))
     }
   }
 
@@ -25,13 +25,11 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
 
   var theta: Double
     get() = floor((atan2(this.y,this.x) * (180/PI)) % 360)
-    set(value) { // this math might be wrong
-        val s: Double = sin(value * (PI/180))
-        val c: Double = cos(value * (PI/180))
-        val x2: Double = x * c - y * s
-        val y2: Double = x * s + y * c
-        this.x = x2
-        this.y = y2
+    set(value) {
+        val m = this.magnitude
+        val deg = value * (PI/180)
+        this.x = m * cos(deg)
+        this.y = m * sin(deg)
     }
 
   /// ---- Math ---- ///
@@ -52,8 +50,8 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
   }
 
   override fun toString(): String {
-    val rounded = this.clone().applyUnaryFunction { n -> round(n * 10.0) / 10 }
-    return "( ${rounded.x}, ${rounded.y} )"
+    val rounded = this.clone().applyUnaryFunction { n -> round(n * 100.0) / 100 }
+    return "Vector2(${rounded.x}, ${rounded.y})"
   }
 
   /// ---- Operators ---- ///
@@ -61,9 +59,6 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
   operator fun minus(b: Vector2): Vector2 = applyBinaryFunction({ m,n -> m - n }, b)
   operator fun times(b: Vector2): Vector2 = applyBinaryFunction({ m,n -> m * n }, b)
   operator fun div(b: Vector2): Vector2 = applyBinaryFunction({ m,n -> m / n}, b)
-  operator fun plusAssign(b: Vector2) {
-    plus(b)
-  }
 
   operator fun times(n: Double): Vector2 = applyUnaryFunction { m -> m * n}
   operator fun div(n: Double): Vector2 = applyUnaryFunction { m -> m / n}

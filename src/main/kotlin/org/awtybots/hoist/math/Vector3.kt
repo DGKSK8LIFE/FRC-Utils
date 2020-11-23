@@ -54,7 +54,7 @@ class Vector3(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0) {
 
   override fun toString(): String {
     val rounded = this.clone().applyFunction { n -> round(n * 10.0) / 10 }
-    return "( ${rounded.x}, ${rounded.y}, ${rounded.z} )"
+    return "Vector3(${rounded.x}, ${rounded.y}, ${rounded.z})"
   }
 
   /// ---- Operators ---- ///
