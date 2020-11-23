@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc
+package org.awtybots.hoist.frc.sensors
 
 import java.util.Optional
 

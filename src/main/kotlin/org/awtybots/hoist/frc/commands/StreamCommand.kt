@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc
+package org.awtybots.hoist.frc.commands
 
 import edu.wpi.first.wpilibj2.command.CommandBase
 import org.awtybots.hoist.frc.Controller
