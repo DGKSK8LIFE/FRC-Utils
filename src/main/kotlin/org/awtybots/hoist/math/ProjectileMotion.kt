@@ -10,8 +10,8 @@ typealias Position = Vector2
 /**
  * Projectile motion simulation that accounts for drag. Use this to find the optimal launch velocity to reach a certain position.
  * 
- * @property[simulationStep] the time delta for the simulation (seconds); lower numbers will mean a more accurate result that takes longer to process
- * @property[simulationIterations] the amount of times the simulation is repeated to fine-tune the launch velocity; each additional iteration halves the uncertainty
+ * @property[simulationStep] the timestep for the simulation (seconds); a smaller timestep will produce a more accurate result, though it will take longer to do so
+ * @property[simulationIterations] the number of simulations run to narrow down the launch velocity; each additional iteration halves the uncertainty
  * @property[ballRadius] the radius of the ball (meters)
  * @property[ballMass] the mass of the ball (kilograms)
  * @property[launchAngle] the launch angle of the shooter (degrees); 0 is horizontal and 90 is straight up
@@ -43,7 +43,7 @@ class Simulation(
 
         // binary search for goldilocks velocity
         // uncertainty on this velocity is +/- maxVelocity / (2 ^ simulationIterations)
-        for (i in 1..simulationIterations) {
+        repeat(simulationIterations) {
             val middleVelocity = (minVelocity + maxVelocity) / 2.0
             val resultY = runSimulation(goalPosition, middleVelocity)
             if (resultY > goalPosition.y) {
@@ -65,7 +65,7 @@ class Simulation(
         debugln()
         debugln("LAUNCH @ ${velocity}")
         debugln()
-        while (position.x < goalPosition.x && time < 3.0) {
+        while (position.x < goalPosition.x && velocity.x > 0 && time < 5.0) {
             lastPosition = position.clone()
             position += velocity * simulationStep
 

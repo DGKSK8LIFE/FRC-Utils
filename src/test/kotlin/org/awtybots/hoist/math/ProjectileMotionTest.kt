@@ -17,7 +17,7 @@ class ProjectileMotionTest() {
         
         val count = 100
         val startTime = System.currentTimeMillis()
-        for(i in 1..count) {
+        repeat(count) {
             simulation.findOptimalLaunchVelocity(Position(10.0, 2.0))
         }
         val endTime = System.currentTimeMillis()
