@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Assertions.*
 class ProjectileMotionTest() {
     @Test
     fun functionalityTest() {
-        val simulation = Simulation(simulationIterations = 10, ballRadius = 0.09, ballMass = 0.14, launchAngle = 30.0)
-        val optimalLaunchVelocity = simulation.findOptimalLaunchVelocity(Position(10.0, 2.0))
+        val powerPortPos = Position(10.0, 2.5)
+        val simulation = Simulation(simulationIterations = 20, simulationStep = 0.01, ballRadius = 0.09, ballMass = 0.14, launchAngle = 55.0)
+        val optimalLaunchVelocity = simulation.findOptimalLaunchVelocity(powerPortPos)?.magnitude
         println("\noptimal launch velocity : ${optimalLaunchVelocity}")
     }
 

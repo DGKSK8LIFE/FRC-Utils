@@ -19,14 +19,14 @@ class Flywheel(
     
     MATH EXPLANATION
     
-    ball velocity = motor RPM / 60 * gear ratio * flywheel circumference * efficiency
+    ball velocity = motor RPM / 60 * gear ratio * flywheel circumference * efficiency / 2
                   = motor RPM * factor
     
-    factor = gear ratio * flywheel circumference / 60 * efficiency
+    factor = gear ratio * flywheel circumference / 60 * efficiency / 2
 
     */
 
-    private val factor = gearRatio * (flywheelRadius * PI * 2.0) / 60.0 * efficiency
+    private val factor = gearRatio * (flywheelRadius * PI * 2.0) / 60.0 * efficiency / 2.0
     
     //val maxBallVelocity = motor.maxRpm * factor
 
