@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.Button
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import kotlin.math.abs
 import kotlin.math.sign
+import org.awtybots.hoist.frc.commands.StreamCommand
 
 class Controller(port: Int) {
 
