@@ -6,11 +6,11 @@
   "mavenUrls": [],
   "jsonUrl": "",
   "javaDependencies": [
-      {
-          "groupId": "edu.wpi.first.wpilibNewCommands",
-          "artifactId": "wpilibNewCommands-java",
-          "version": "wpilib"
-      }
+    {
+      "groupId": "edu.wpi.first.wpilibNewCommands",
+      "artifactId": "wpilibNewCommands-java",
+      "version": "wpilib"
+    }
   ],
   "jniDependencies": []
 }
