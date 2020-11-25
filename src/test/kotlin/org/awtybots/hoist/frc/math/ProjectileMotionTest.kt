@@ -9,7 +9,7 @@ class ProjectileMotionTest() {
         val powerPortPos = Position(10.0, 2.5)
         val simulation = Simulation(simulationIterations = 20, simulationStep = 0.01, ballRadius = 0.09, ballMass = 0.14, launchAngle = 55.0)
         val optimalLaunchVelocity = simulation.findOptimalLaunchVelocity(powerPortPos)?.magnitude
-        println("\noptimal launch velocity : ${optimalLaunchVelocity}")
+        println("\noptimal launch velocity : ${optimalLaunchVelocity} meters/second")
     }
 
     @Test
@@ -24,6 +24,6 @@ class ProjectileMotionTest() {
         val endTime = System.currentTimeMillis()
 
         val avgTime = (endTime - startTime).toDouble() / count.toDouble()
-        println("\naverage simulation time: ${avgTime}ms")
+        println("\naverage simulation time: ${avgTime} milliseconds")
     }
 }
