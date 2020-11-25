@@ -55,14 +55,14 @@ class Limelight(override val mountingHeight: Double, override val mountingAngle:
   /**
    * current camera pipeline (integer from 0 to 9, inclusive)
    */
-  var pipeline: Double?
+  var pipeline: Int?
     set(value) {
       if(value != null && value < 10 && value > -1)
         setValue(TableEntry.CurrentPipeline, value)
       else
         println("Limelight.setPipeline: pipeline number must be in range 0..9")
     }
-    get() = getValue(TableEntry.CurrentPipeline)
+    get() = getValue(TableEntry.CurrentPipeline)?.toInt()
 
   /**
    * true is driver mode, false is vision processing mode
