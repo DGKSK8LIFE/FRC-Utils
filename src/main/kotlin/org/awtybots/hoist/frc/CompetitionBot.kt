@@ -1,25 +1,29 @@
 package org.awtybots.hoist.frc
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-open object CompetitionBot(
-    
-): TimedRobot() {
+open class CompetitionBot: TimedRobot() {
 
-    // make subsystems public properties of this class?
-    // what else?
+    private val autonOptions: MutableMap<String, CommandBase> = mutableMapOf() //TODO this is stupid and it needs to be any class that inherits from CommandBase
 
-    fun addAutonOption(name: String, cmd: Command) {
+    fun addAutonOption(name: String, cmd: CommandBase) { // TODO THIS IS BROKEN
+        if (cmd != null && name != null)
+            autonOptions.put(name,cmd)
     }
   
     override fun robotInit() {
-        // create subsystem instances? how? (they're gonna be singletons i know that much
         // create auton selector on smartdashboard (list of something? enums?)
+        var autonSelector = SendableChooser<CommandBase>() // TODO THIS IS BROKEN
+        if (!autonOptions.isEmpty())
+            for ((name,cmd) in autonOptions) {
+                autonSelector.addOption(name, cmd)
+            }
     }
 
     override fun robotPeriodic() = CommandScheduler.getInstance().run()
