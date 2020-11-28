@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc
+package org.awtybots.hoist.frc.commands
 
 import edu.wpi.first.wpilibj.GenericHID.Hand
 import edu.wpi.first.wpilibj.XboxController
@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.Button
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import kotlin.math.abs
 import kotlin.math.sign
-import org.awtybots.hoist.frc.commands.StreamCommand
+import org.awtybots.hoist.frc.commands.AnalogInputCommand
 
 class Controller(port: Int) {
 
@@ -26,10 +26,10 @@ class Controller(port: Int) {
   val trgR = Button { getTriggerActive(Hand.kRight) }
 
   /**
-   * Stream controller inputs to a [command][StreamCommand] continuously
-   * @param command  The command to send the controller inputs to
+   * Stream controller inputs to a [command][AnalogInputCommand] continuously
+   * @param[command]  The command to send the controller inputs to
    */
-  fun streamAnalogInputTo( command: StreamCommand ) {
+  fun streamAnalogInputTo( command: AnalogInputCommand ) {
     command.controller = this
     command.schedule()
   }
