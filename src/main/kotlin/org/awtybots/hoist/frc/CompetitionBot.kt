@@ -10,33 +10,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 open class CompetitionBot: TimedRobot() {
 
-    private val autonOptions: MutableMap<String, Command> = mutableMapOf()
     private var autonSelector = SendableChooser<Command>()
-    private var autonCommand: Command? = null
+    private lateinit var autonCommand: Command?
 
-    fun addAutonOption(name: String, cmd: Command) = autonOptions.put(name,cmd)
+    open fun addAutonOptions() = println("Please override addAutonOptions in CompetitionBot")
+
+    open fun bindIO() = println("Please override bindIO in CompetitionBot")
   
+    override open fun disabledInit() { }
+
+    fun addAutonOption(name: String, cmd: Command) = autonSelector.addOption(name,cmd)
+
+    fun addAutonDefault(name: String, cmd: Command) = autonSelector.setDefaultOption(name,cmd)
+
     override fun robotInit() {
-        if (autonOptions.isEmpty()) println("No autonomous commands were set")
-        else { // TODO maybe make the first one default?
-            autonOptions.forEach { (name,cmd) ->
-                autonSelector.addOption(name, cmd)
-            }
-            SmartDashboard.putData(autonSelector)
-        }
+        addAutonOptions()
+        SmartDashboard.putData(autonSelector) // TODO check if this is empty before sending it
     }
 
     override fun robotPeriodic() = CommandScheduler.getInstance().run()
 
-    override open fun disabledInit() { }
-
-    open fun bindIO() { }
-
     override fun autonomousInit() {
-        autonCommand = autonSelector.getSelected()
+        private var autonCommand = autonSelector.getSelected()
         autonCommand?.schedule()
     }
 
-    override fun teleopInit() = autonCommand?.cancel()
+    override fun teleopInit() {
+        autonCommand?.cancel()
+        bindIO()
+    }
 
 }
