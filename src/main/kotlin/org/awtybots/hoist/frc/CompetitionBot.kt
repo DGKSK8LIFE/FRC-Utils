@@ -33,16 +33,10 @@ open class CompetitionBot: TimedRobot() {
     open fun bindIO() { }
 
     override fun autonomousInit() {
-        // start selected auton command
         autonCommand = autonSelector.getSelected()
         autonCommand?.schedule()
     }
 
-    override fun teleopInit() {
-        // cancel auton command
-        autonCommand?.cancel()
-        // bind OI
-        // set default command for driving subsytem
-    }
+    override fun teleopInit() = autonCommand?.cancel()
 
 }
