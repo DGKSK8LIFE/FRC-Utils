@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 open class CompetitionBot: TimedRobot() {
 
     private var autonSelector = SendableChooser<Command>()
-    private lateinit var autonCommand: Command?
+    private var autonCommand: Command? = null
 
     open fun addAutonOptions() = println("Please override addAutonOptions in CompetitionBot")
 
@@ -31,7 +31,7 @@ open class CompetitionBot: TimedRobot() {
     override fun robotPeriodic() = CommandScheduler.getInstance().run()
 
     override fun autonomousInit() {
-        private var autonCommand = autonSelector.getSelected()
+        autonCommand = autonSelector.getSelected()
         autonCommand?.schedule()
     }
 
