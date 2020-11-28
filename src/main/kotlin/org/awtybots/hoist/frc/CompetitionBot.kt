@@ -1,25 +1,25 @@
 package org.awtybots.hoist.frc
 
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler
+import edu.wpi.first.wpilibj2.command.SubsystemBase
+import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj.DriverStation
+import edu.wpi.first.wpilibj.TimedRobot
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 open class CompetitionBot: TimedRobot() {
 
-    private val autonOptions: MutableMap<String, CommandBase> = mutableMapOf() //TODO this is stupid and it needs to be any class that inherits from CommandBase
+    private val autonOptions: MutableMap<String, Command> = mutableMapOf()
 
-    fun addAutonOption(name: String, cmd: CommandBase) { // TODO THIS IS BROKEN
+    fun addAutonOption(name: String, cmd: Command) {
         if (cmd != null && name != null)
             autonOptions.put(name,cmd)
     }
   
     override fun robotInit() {
         // create auton selector on smartdashboard (list of something? enums?)
-        var autonSelector = SendableChooser<CommandBase>() // TODO THIS IS BROKEN
+        var autonSelector = SendableChooser<Command>() // TODO THIS IS BROKEN
         if (!autonOptions.isEmpty())
             for ((name,cmd) in autonOptions) {
                 autonSelector.addOption(name, cmd)
