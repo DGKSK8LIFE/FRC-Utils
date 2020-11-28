@@ -28,7 +28,9 @@ open class CompetitionBot: TimedRobot() {
 
     override fun robotPeriodic() = CommandScheduler.getInstance().run()
 
-    override open fun disabledInit() { /* whatever let them override it */ }
+    override open fun disabledInit() { }
+
+    override open fun bindIO() { }
 
     override fun autonomousInit() {
         // start selected auton command
