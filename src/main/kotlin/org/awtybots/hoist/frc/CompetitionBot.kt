@@ -30,7 +30,7 @@ open class CompetitionBot: TimedRobot() {
 
     override open fun disabledInit() { }
 
-    override open fun bindIO() { }
+    open fun bindIO() { }
 
     override fun autonomousInit() {
         // start selected auton command
