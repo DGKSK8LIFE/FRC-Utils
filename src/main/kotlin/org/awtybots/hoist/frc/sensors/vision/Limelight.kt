@@ -5,6 +5,8 @@ import edu.wpi.first.networktables.NetworkTableInstance
 import edu.wpi.first.networktables.NetworkTableType
 import edu.wpi.first.networktables.NetworkTableValue
 
+import org.awtybots.hoist.frc.Logger
+
 /**
   Limelight interface.
 
@@ -14,6 +16,7 @@ import edu.wpi.first.networktables.NetworkTableValue
 class Limelight(override val mountingHeight: Double, override val mountingAngle: Double) : Camera {
 
   private val netTable = NetworkTableInstance.getDefault().getTable("limelight")
+  private val logger = Logger("Limelight")
 
   override val hasVisibleTarget: Boolean
     get() {
@@ -60,7 +63,7 @@ class Limelight(override val mountingHeight: Double, override val mountingAngle:
       if(value != null && value < 10 && value > -1)
         setValue(TableEntry.CurrentPipeline, value)
       else
-        println("Limelight.setPipeline: pipeline number must be in range 0..9")
+        logger.error("Pipeline number must be in range 0..9")
     }
     get() = getValue(TableEntry.CurrentPipeline)?.toInt()
 
@@ -117,7 +120,7 @@ class Limelight(override val mountingHeight: Double, override val mountingAngle:
     return if (entry.setter != "")
       netTable.getEntry(entry.setter).setNumber(value)
     else {
-      false.also { println("No setter available for TableEntry") }
+      false.also { logger.error("No setter available for TableEntry $entry") }
     }
   }
 
