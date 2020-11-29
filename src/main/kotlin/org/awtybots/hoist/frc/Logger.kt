@@ -12,7 +12,7 @@ class Logger(var writeToFile: Boolean) {
         log("Error", message)
     }
 
-    private fun log(category: String, message: String) {
-        println("$category -> $message")
+    private fun log(mode: String, message: String) {
+        println("$mode -> $message")
     }
 }
