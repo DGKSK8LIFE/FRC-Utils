@@ -13,12 +13,11 @@ class Logger(private val writeToFile: Boolean) {
     private fun log(category: String, mode: String, message: String) {
         val date: String = LocalDateTime.now()
         val outputString: String = "[$date] [$category] [$mode] $message"
-        if (!writeToFile) {
-            println(outputString)
-        } else {
+        if (writeToFile) {
             File("./log.txt").printWriter().use { out -> history.forEach {
                 out.println(outputString)
             } }
         }
+        println(outputString)
     }
 }
