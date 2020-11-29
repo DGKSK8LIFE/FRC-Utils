@@ -1,18 +1,18 @@
 package org.awtybots.hoist.frc
 
 class Logger(var writeToFile: Boolean) {
-    fun debug(message: String) {
-        log("Debug", message)
+    fun debug(category: String, message: String) {
+        log(category, "Debug", message)
     }
 
-    fun warn(message: String) {
-        log("Warn", message) }
+    fun warn(category: String, message: String) {
+        log(category, "Warn", message) }
 
-    fun error(message: String) {
-        log("Error", message)
+    fun error(category: String, message: String) {
+        log(category, "Error", message)
     }
 
-    private fun log(mode: String, message: String) {
-        println("$mode -> $message")
+    private fun log(category: String, mode: String, message: String) {
+        println("$category -> $mode -> $message")
     }
 }
