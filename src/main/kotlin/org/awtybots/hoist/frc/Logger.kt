@@ -2,7 +2,7 @@ package org.awtybots.hoist.frc
 
 class Logger(var writeToFile: Boolean) {
     fun Log(loggingMode: String, message: String) {
-        if (writeToFile == false) {
+        if (!writeToFile) {
             when (loggingMode.toLowerCase()) {
                 "debug" -> println("debug: ${message}")
                 "warn" -> println("warn: ${message}")
