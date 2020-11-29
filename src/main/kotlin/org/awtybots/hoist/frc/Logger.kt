@@ -1,16 +1,22 @@
 package org.awtybots.hoist.frc
 
 class Logger(var writeToFile: Boolean) {
-    fun Log(loggingMode: String, message: String) {
-        if (!writeToFile) {
-            when (loggingMode.toLowerCase()) {
-                "debug" -> println("debug: $message")
-                "warn" -> println("warn: $message")
-                "error" -> println("error: $message")
-                else -> {
-                    println("Invalid Logging Mode")
-                }
-            }
-        }
+    fun Debug(message: String) {
+        Log("Debug", message)
+    }
+
+    fun Warn(message: String) {
+        Log("Warn", message) }
+
+    fun Error(message: String) {
+        Log("Error", message)
+    }
+
+    private fun Log(mode: String, message: String) {
+        println("""
+            <---------------------------------->
+                    $mode -> $message
+            <---------------------------------->
+        """)
     }
 }
