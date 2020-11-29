@@ -8,6 +8,7 @@ class Logger(var writeToFile: Boolean) {
     fun error(category: String, message: String) = println(log(category, "Error", message))
 
     private fun log(category: String, mode: String, message: String): String {
-        return "$category -> $mode -> $message"
+        var date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+        return "$date -> $category -> $mode -> $message"
     }
 }
