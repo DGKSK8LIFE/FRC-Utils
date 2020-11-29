@@ -12,5 +12,6 @@ class Logger(private val writeToFile: Boolean) {
             val date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
             return "[$date] [$category] [$mode] $message"
         }
-        return Nothing 
+        return Nothing
+    }
 }
