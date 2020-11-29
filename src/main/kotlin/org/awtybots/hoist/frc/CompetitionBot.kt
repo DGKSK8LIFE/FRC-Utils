@@ -10,30 +10,36 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 open class CompetitionBot: TimedRobot() {
 
-    private var autonSelector = SendableChooser<Command>()
+    private val autonSelector = SendableChooser<Command>()
     private var autonCommand: Command? = null
 
-    open fun addAutonOptions() = println("Please override addAutonOptions in CompetitionBot")
-
-    open fun bindIO() = println("Please override bindIO in CompetitionBot")
-  
-    override open fun disabledInit() { }
-
-    fun addAutonOption(name: String, cmd: Command) = autonSelector.addOption(name,cmd)
-
-    fun addAutonDefault(name: String, cmd: Command) = autonSelector.setDefaultOption(name,cmd)
+    private val logger = Logger("CompetitionBot")
 
     override fun robotInit() {
         addAutonOptions()
-        SmartDashboard.putData(autonSelector) // TODO check if this is empty before sending it
+        SmartDashboard.putData(autonSelector)
     }
 
     override fun robotPeriodic() = CommandScheduler.getInstance().run()
+  
+    override fun disabledInit() = Logger.saveToFile()
+
+    // auton
+
+    fun addAutonOption(name: String, command: Command) = autonSelector.addOption(name, command)
+
+    fun addAutonDefault(name: String, command: Command) = autonSelector.setDefaultOption(name, command)
+
+    open fun addAutonOptions() = logger.warn("Override the addAutonOptions() method in CompetitionBot!")
 
     override fun autonomousInit() {
         autonCommand = autonSelector.getSelected()
         autonCommand?.schedule()
     }
+
+    // teleop
+
+    open fun bindIO() = logger.warn("Override the bindIO() method in CompetitionBot!")
 
     override fun teleopInit() {
         autonCommand?.cancel()

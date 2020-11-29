@@ -119,9 +119,7 @@ class Simulation(
         return Force(r = dragForceMagnitude, theta = dragForceTheta)
     }
 
-    private fun debugln() {
-        if(debugMode) println()
-    }
+    private fun debugln() = debugln("")
     private fun debugln(any: Any) {
         if(debugMode) println(any)
     }
