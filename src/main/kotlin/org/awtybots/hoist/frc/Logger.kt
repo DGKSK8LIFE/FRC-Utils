@@ -1,23 +1,37 @@
 package org.awtybots.hoist.frc
 
+import java.io.PrintWriter
 import java.io.File
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-class Logger(private val writeToFile: Boolean) {
-    fun debug(category: String, message: String) = log(category, "Debug", message)
+private const val dir = "logs"
 
-    fun warn(category: String, message: String) = log(category, "Warn", message)
+class Logger(private val category: String) {
 
-    fun error(category: String, message: String) = log(category, "Error", message)
+    fun debug(message: String) = log("DEBUG", message)
+    fun warn(message: String) = log("WARN", message)
+    fun error(message: String) = log("ERROR", message)
+    fun saveToFile() = Companion.saveToFile()
 
-    private fun log(category: String, mode: String, message: String) {
-        val date: LocalDateTime = LocalDateTime.now()
-        val outputString: String = "[$date] [$category] [$mode] $message"
-        if (writeToFile) {
-            File("./log.txt").printWriter().use { out -> history.forEach {
-                out.println(outputString)
-            } }
+    private fun log(mode: String, message: String) = Companion.log(category, mode, message)
+
+    companion object {
+        private val formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd hh-mm-ss")
+        private val history = mutableListOf<String>()
+  
+        private fun log(category: String, mode: String, message: String) {
+            val date = LocalDateTime.now().format(formatter)
+            val outputString = "[$date] [$category] [$mode] $message"
+            println(outputString)
+            history.add(outputString)
         }
-        println(outputString)
+
+        fun saveToFile() {
+            val timestamp = LocalDateTime.now().format(formatter)
+            File("./$dir").mkdir()
+            File("./$dir/log $timestamp.txt").printWriter().use { out -> history.forEach { out.println(it) } }
+            history.clear()
+        }
     }
 }
