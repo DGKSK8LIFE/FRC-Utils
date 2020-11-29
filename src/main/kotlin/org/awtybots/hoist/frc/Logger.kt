@@ -8,9 +8,14 @@ class Logger(private val writeToFile: Boolean) {
     fun error(category: String, message: String) = log(category, "Error", message)
 
     private fun log(category: String, mode: String, message: String) {
+        val date: String = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+        val outputString: String = "[$date] [$category] [$mode] $message"
         if (!writeToFile) {
-            val date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-            println("[$date] [$category] [$mode] $message")
+            println(outputString)
+        } else {
+            File("../../../../../../logs/log.txt").printWriter().use { out -> history.forEach {
+                out.println(outputString)
+            } }
         }
     }
 }
