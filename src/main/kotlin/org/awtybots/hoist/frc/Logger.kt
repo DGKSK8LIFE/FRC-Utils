@@ -10,7 +10,7 @@ class Logger(private val writeToFile: Boolean) {
     private fun log(category: String, mode: String, message: String): String {
         if (!writeToFile) {
             val date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-            return "[$date] [$category] [$mode] [$message]"
+            return "[$date] [$category] [$mode] $message"
         }
         return Nothing 
 }
