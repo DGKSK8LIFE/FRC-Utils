@@ -1,1 +1,5 @@
 * @awtybots/old
+
+src/test/ @matt-mekha
+math/* @matt-mekha
+/src/main/kotlin/org/awtybots/hoist/frc/Logger.kt @matt-mekha
