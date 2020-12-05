@@ -6,5 +6,6 @@
 .project
 .settings/
 build/
+bin/
 logs/
 *.code-workspace
