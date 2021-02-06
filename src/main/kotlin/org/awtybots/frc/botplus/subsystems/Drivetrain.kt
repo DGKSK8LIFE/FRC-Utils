@@ -1,10 +1,10 @@
-package org.awtybots.hoist.frc.subsystems
+package org.awtybots.frc.botplus.subsystems
 
 import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.BaseTalon
 import edu.wpi.first.wpiutil.math.MathUtil.clamp
-import org.awtybots.hoist.frc.motors.MotorGroup
-import org.awtybots.hoist.frc.config.DriveConfig
+import org.awtybots.frc.botplus.motors.MotorGroup
+import org.awtybots.frc.botplus.config.DriveConfig
 import kotlin.math.*
 
 class Drivetrain<T : BaseTalon>(

@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc.config
+package org.awtybots.frc.botplus.config
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice
 

@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc.math
+package org.awtybots.frc.botplus.math
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*

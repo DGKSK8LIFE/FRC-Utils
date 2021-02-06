@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc.motors
+package org.awtybots.frc.botplus.motors
 
 import com.ctre.phoenix.motorcontrol.ControlMode
 import com.ctre.phoenix.motorcontrol.can.BaseTalon
@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode
 import edu.wpi.first.wpiutil.math.MathUtil.clamp
 import kotlin.math.*
 
-import org.awtybots.hoist.frc.config.DriveConfig
+import org.awtybots.frc.botplus.config.DriveConfig
 
 class MotorGroup<T : BaseTalon>(
   val motorList: Array<T>,

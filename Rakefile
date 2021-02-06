@@ -1,5 +1,5 @@
 PROJ_NAME = "awtybots-lib"
-LIB_NAME = "hoist"
+LIB_NAME = "botplus"
 
 desc "Remove gradle's build folders"
 task :clean do

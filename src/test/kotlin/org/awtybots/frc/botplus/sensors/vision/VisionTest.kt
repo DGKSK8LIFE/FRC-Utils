@@ -1,9 +1,9 @@
-package org.awtybots.hoist.frc.sensors.vision
+package org.awtybots.frc.botplus.sensors.vision
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
-import org.awtybots.hoist.frc.math.*
+import org.awtybots.frc.botplus.math.*
 import kotlin.random.Random
 
 class VirtualCamera : Camera {

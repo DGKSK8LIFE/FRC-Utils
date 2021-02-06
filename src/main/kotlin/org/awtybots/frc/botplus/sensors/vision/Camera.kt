@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc.sensors.vision
+package org.awtybots.frc.botplus.sensors.vision
 
 interface Camera {
     val mountingHeight: Double

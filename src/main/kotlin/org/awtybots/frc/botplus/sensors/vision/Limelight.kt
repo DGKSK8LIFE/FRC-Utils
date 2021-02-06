@@ -1,11 +1,11 @@
-package org.awtybots.hoist.frc.sensors.vision
+package org.awtybots.frc.botplus.sensors.vision
 
 import edu.wpi.first.networktables.NetworkTable
 import edu.wpi.first.networktables.NetworkTableInstance
 import edu.wpi.first.networktables.NetworkTableType
 import edu.wpi.first.networktables.NetworkTableValue
 
-import org.awtybots.hoist.frc.Logger
+import org.awtybots.frc.botplus.Logger
 
 /**
   Limelight interface.

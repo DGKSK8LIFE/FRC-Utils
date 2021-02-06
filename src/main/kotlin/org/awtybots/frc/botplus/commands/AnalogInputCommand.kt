@@ -1,9 +1,9 @@
-package org.awtybots.hoist.frc.commands
+package org.awtybots.frc.botplus.commands
 
 import edu.wpi.first.wpilibj2.command.CommandBase
-import org.awtybots.hoist.frc.commands.Controller
-import org.awtybots.hoist.frc.commands.ControllerValues
-import org.awtybots.hoist.frc.Logger
+import org.awtybots.frc.botplus.commands.Controller
+import org.awtybots.frc.botplus.commands.ControllerValues
+import org.awtybots.frc.botplus.Logger
 
 open class AnalogInputCommand: CommandBase() {
 

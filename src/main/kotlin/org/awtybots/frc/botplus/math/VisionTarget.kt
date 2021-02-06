@@ -1,8 +1,8 @@
-package org.awtybots.hoist.frc.math
+package org.awtybots.frc.botplus.math
 
 import kotlin.math.*
 
-import org.awtybots.hoist.frc.sensors.vision.Camera
+import org.awtybots.frc.botplus.sensors.vision.Camera
 
 /**
  * A utility class that abstracts vision target math.

@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc
+package org.awtybots.frc.botplus
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import edu.wpi.first.wpilibj2.command.SubsystemBase

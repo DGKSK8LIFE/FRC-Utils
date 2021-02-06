@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc.commands
+package org.awtybots.frc.botplus.commands
 
 import edu.wpi.first.wpilibj.GenericHID.Hand
 import edu.wpi.first.wpilibj.XboxController
@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.Button
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import kotlin.math.abs
 import kotlin.math.sign
-import org.awtybots.hoist.frc.commands.AnalogInputCommand
+import org.awtybots.frc.botplus.commands.AnalogInputCommand
 
 class Controller(port: Int) {
 

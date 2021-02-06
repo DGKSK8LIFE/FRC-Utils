@@ -1,4 +1,4 @@
-package org.awtybots.hoist.frc.math
+package org.awtybots.frc.botplus.math
 
 import kotlin.math.*
 
