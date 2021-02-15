@@ -56,7 +56,7 @@ class Drivetrain<T : BaseTalon>(
     rightMotors.motorList.forEach { m -> m.setSelectedSensorPosition(0) }
   }
   private fun outputDeadzone(x: Double): Double {
-    return if (abs(x) < config.kPercentMin)
+    return if (abs(x * config.kPercentMax) < config.kPercentMin)
       0.0
     else 
       clamp(x, -1.0, 1.0) * config.kPercentMax
