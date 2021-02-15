@@ -5,13 +5,15 @@ import com.ctre.phoenix.motorcontrol.can.BaseTalon
 import edu.wpi.first.wpiutil.math.MathUtil.clamp
 import org.awtybots.frc.botplus.motors.MotorGroup
 import org.awtybots.frc.botplus.config.DriveConfig
+import edu.wpi.first.wpilibj2.command.CommandScheduler
+import edu.wpi.first.wpilibj2.command.SubsystemBase
 import kotlin.math.*
 
 class Drivetrain<T : BaseTalon>(
     private val config: DriveConfig,
     private val leftMotors: MotorGroup<T>,
     private val rightMotors: MotorGroup<T>
-) {
+) : SubsystemBase() {
 
   init {
     val allMotors = MotorGroup(leftMotors.motorList + rightMotors.motorList, config)
@@ -23,14 +25,21 @@ class Drivetrain<T : BaseTalon>(
     }
 
     rightMotors.motorList.forEach { motor -> motor.setInverted(true) }
+
+    CommandScheduler.getInstance().registerSubsystem(this);
+  }
+
+  override fun periodic() {
+    leftMotors.periodic()
+    rightMotors.periodic()
   }
 
   fun setMotorOutput(left_: Double, right_: Double) {
     val right = outputDeadzone(right_)
     val left  = outputDeadzone(left_)
 
-    leftMotors.setMotorOutput(left * config.kPercentMax)
-    rightMotors.setMotorOutput(right * config.kPercentMax)
+    leftMotors.setMotorOutput(left)
+    rightMotors.setMotorOutput(right)
   }
 
   fun setGoalVelocity(left: Double, right: Double) {
@@ -53,6 +62,6 @@ class Drivetrain<T : BaseTalon>(
     return if (abs(x) < config.kPercentMin)
       0.0
     else 
-      clamp(x, -config.kPercentMax, config.kPercentMax)
+      clamp(x, -1.0, 1.0) * config.kPercentMax
   }
 }

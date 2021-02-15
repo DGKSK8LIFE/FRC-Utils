@@ -16,16 +16,22 @@ class MotorGroup<T : BaseTalon>(
   private var integralError: Double = 0.0
   private var lastVelocityError: Double = 0.0
 
+  private var pidEnabled = false
+
   var goalVelocity: Double = 0.0
     set(velocity) {
+      pidEnabled = true
       this.integralError = 0.0
       this.lastVelocityError = 0.0
       field = velocity
     }
 
-  fun setMotorOutput(percent: Double) {
-    motorList.forEach { m -> m.set(ControlMode.PercentOutput, percent) }
-  }
+  var motorOutput: Double = 0.0
+    set(percent) {
+      pidEnabled = false
+      motorList.forEach { m -> m.set(ControlMode.PercentOutput, percent) }
+      field = percent
+    }
 
   fun drivePID() {
     var currentVelocity = getWheelVelocity()
@@ -42,7 +48,12 @@ class MotorGroup<T : BaseTalon>(
       -config.kMaxIntegral / config.kI,
       config.kMaxIntegral / config.kI
     )
-    setMotorOutput((config.kP * velocityError) + (config.kI * integralError) + (config.kD * accelerationError))
+    motorOutput = (config.kP * velocityError) + (config.kI * integralError) + (config.kD * accelerationError)
+  }
+
+  fun periodic() {
+    if (pidEnabled)
+      drivePID()
   }
 
   private fun getWheelVelocity() =
