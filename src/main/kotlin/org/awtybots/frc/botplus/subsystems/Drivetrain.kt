@@ -34,12 +34,9 @@ class Drivetrain<T : BaseTalon>(
     rightMotors.periodic()
   }
 
-  fun setMotorOutput(left_: Double, right_: Double) {
-    val right = outputDeadzone(right_)
-    val left  = outputDeadzone(left_)
-
-    leftMotors.setMotorOutput(left)
-    rightMotors.setMotorOutput(right)
+  fun setMotorOutput(left: Double, right: Double) {
+    leftMotors.motorOutput = outputDeadzone(left)
+    rightMotors.motorOutput = outputDeadzone(right)
   }
 
   fun setGoalVelocity(left: Double, right: Double) {
