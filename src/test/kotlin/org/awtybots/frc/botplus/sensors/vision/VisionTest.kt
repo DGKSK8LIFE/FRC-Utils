@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
 import org.awtybots.frc.botplus.math.*
+import org.awtybots.frc.botplus.motors.SimulatedFalcon500
 import kotlin.random.Random
 
 class VirtualCamera : Camera {
@@ -25,19 +26,19 @@ class VisionTest {
     fun functionalityTest() {
         val camera = VirtualCamera()
         val target = VisionTarget(camera, 2.5)
+        val flywheel = Flywheel(flywheelRadius = 0.05, motor = SimulatedFalcon500())
         println()
 
         val targetDisplacement = target.targetDisplacement!!
         println("target displacement: ${targetDisplacement}")
 
-        val simulation = Simulation(simulationIterations = 10, simulationStep = 0.05, ballRadius = 0.09, ballMass = 0.14, launchAngle = 55.0)
+        val simulation = Simulation(simulationIterations = 10, simulationStep = 0.05, ballRadius = 0.09, ballMass = 0.14, launchAngle = 55.0, maxSpeed = flywheel.maxBallVelocity)
         val launchVelocity = simulation.findOptimalLaunchVelocity(targetDisplacement)
         val launchVelocityMagnitude = launchVelocity?.magnitude
         println("launch velocity: ${launchVelocityMagnitude} meters/second")
 
         if(launchVelocity == null) return
 
-        val flywheel = Flywheel(flywheelRadius = 0.05)
         val motorRpm = flywheel.ballVelocityToMotorRpm(launchVelocity)
         println("motor RPM: ${motorRpm} revolutions/minute")
     }

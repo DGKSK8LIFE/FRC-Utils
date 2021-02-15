@@ -9,7 +9,7 @@ import kotlin.math.*
 
 import org.awtybots.frc.botplus.config.DriveConfig
 
-class MotorGroup<T : BaseTalon>(
+class MotorGroup<T : Motor>(
   val motorList: Array<T>,
   private val config: DriveConfig
 ) {
@@ -29,7 +29,7 @@ class MotorGroup<T : BaseTalon>(
   var motorOutput: Double = 0.0
     set(percent) {
       pidEnabled = false
-      motorList.forEach { m -> m.set(ControlMode.PercentOutput, percent) }
+      motorList.forEach { m -> m.motorController.set(ControlMode.PercentOutput, percent) }
       field = percent
     }
 
@@ -57,10 +57,10 @@ class MotorGroup<T : BaseTalon>(
   }
 
   private fun getWheelVelocity() =
-      humanizeVelocity(motorList[0].getSelectedSensorVelocity().toDouble())
+      humanizeVelocity(motorList[0].motorController.getSelectedSensorVelocity().toDouble())
   
   private fun getWheelDistance() =
-      humanizeDistance(motorList[0].getSelectedSensorPosition().toDouble())
+      humanizeDistance(motorList[0].motorController.getSelectedSensorPosition().toDouble())
 
   private fun humanizeVelocity(nativeVelocity: Double): Double =
       nativeVelocity / 2048.0 * 10.0 * (config.kWheelDiameter * PI)

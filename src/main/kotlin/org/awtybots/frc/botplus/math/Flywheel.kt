@@ -2,6 +2,8 @@ package org.awtybots.frc.botplus.math
 
 import kotlin.math.PI
 
+import org.awtybots.frc.botplus.motors.Motor;
+
 /**
  * A utility class that abstracts the flywheel math.
  * 
@@ -11,7 +13,7 @@ import kotlin.math.PI
  */
 class Flywheel(
     flywheelRadius: Double,
-    gearRatio: Double = 1.0,
+    motor: Motor,
     efficiency: Double = 0.95
 ) {
 
@@ -26,9 +28,9 @@ class Flywheel(
 
     */
 
-    private val factor = gearRatio * (flywheelRadius * PI * 2.0) / 60.0 * efficiency / 2.0
+    private val factor = motor.gearRatio * (flywheelRadius * PI * 2.0) / 60.0 * efficiency / 2.0
     
-    //val maxBallVelocity = motor.maxRpm * factor
+    val maxBallVelocity = motor.specs.freeSpeed * factor
 
     /**
      * Finds the motor RPM necessary to launch a ball at a given velocity.
