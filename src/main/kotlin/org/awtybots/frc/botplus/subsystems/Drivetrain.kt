@@ -34,22 +34,22 @@ class Drivetrain<T : Motor>(
     rightMotors.periodic()
   }
 
-  fun setMotorOutput(left: Double, right: Double) {
+  fun setMotorRawOutput(left: Double, right: Double) {
     leftMotors.motorOutput = outputDeadzone(left)
     rightMotors.motorOutput = outputDeadzone(right)
   }
 
-  fun setGoalVelocity(left: Double, right: Double) {
+  fun setMotorVelocityOutput(left: Double, right: Double) {
     leftMotors.goalVelocity = left * config.kVelocityMax
     rightMotors.goalVelocity = right * config.kVelocityMax
   }
 
   fun kill() {
-    setGoalVelocity(0.0, 0.0)
-    setMotorOutput(0.0, 0.0)
+    setMotorVelocityOutput(0.0, 0.0)
+    setMotorRawOutput(0.0, 0.0)
   }
 
-  fun softStop() = setGoalVelocity(0.0, 0.0)
+  fun softStop() = setMotorVelocityOutput(0.0, 0.0)
 
   fun resetSensors() {
     leftMotors.motorList.forEach { m -> m.motorController.setSelectedSensorPosition(0) }
