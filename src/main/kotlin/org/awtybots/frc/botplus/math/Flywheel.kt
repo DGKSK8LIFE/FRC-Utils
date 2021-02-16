@@ -21,10 +21,8 @@ class Flywheel(
     
     MATH EXPLANATION
     
-    ball velocity = motor RPM / 60 * gear ratio * flywheel circumference * efficiency / 2
-                  = motor RPM * factor
-    
-    factor = gear ratio * flywheel circumference / 60 * efficiency / 2
+    factor = gear ratio * flywheel circumference * efficiency / 60 / 2
+    ball velocity = motor RPM * factor
 
     */
 
