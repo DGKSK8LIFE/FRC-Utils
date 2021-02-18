@@ -36,3 +36,9 @@ task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
   outputFormat = 'javadoc'
   outputDirectory = "$buildDir/docs/javadoc"
 }
+
+task setupgithooks(type: Exec) {
+  commandLine 'git', 'config', '--local', 'core.hooksPath', './.hooks/'
+}
+
+build.dependsOn "setupgithooks"
