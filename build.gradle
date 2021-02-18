@@ -38,7 +38,7 @@ task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
 }
 
 task setupgithooks(type: Exec) {
-  commandLine 'git', 'config', '--local', 'core.hooksPath', './.hooks/'
+  commandLine 'git', 'config', '--local', 'core.hooksPath', './.git-hooks'
 }
 
 build.dependsOn "setupgithooks"
