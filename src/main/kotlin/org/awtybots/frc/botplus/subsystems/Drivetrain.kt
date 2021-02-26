@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import kotlin.math.*
 
-class Drivetrain<T : Motor>(
+open class Drivetrain<T : Motor>(
     private val config: DriveConfig,
     private val leftMotors: MotorGroup<T>,
     private val rightMotors: MotorGroup<T>

@@ -7,7 +7,7 @@ import org.awtybots.frc.botplus.Logger
 
 open class AnalogInputCommand: CommandBase() {
 
-  lateinit var controller: Controller
+  internal lateinit var controller: Controller
   private var firstRun: Boolean = true
 
   override fun execute() = analogExecute(
