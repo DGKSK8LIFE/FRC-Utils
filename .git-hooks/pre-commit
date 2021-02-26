@@ -17,7 +17,7 @@ illegal_files=$(
     sed -E '/[-_\0\n\r\t\~ ]/!d'
 )
 
-if [[ $(echo $illegal_files | wc -l) != 0 ]]; then
+if [[ $(echo $illegal_files | wc -l) != 1 ]]; then
     echo "Error: Filename contains invalid characters"
     echo "File names cannot include the following: - or _ or \0 or \n or \r or \t or ~"
     exit 1
