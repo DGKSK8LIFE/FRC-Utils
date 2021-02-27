@@ -33,10 +33,10 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
     var theta: Double
         get() = floor((atan2(this.y, this.x) * (180 / PI)) % 360)
         set(value) {
-                val m = this.magnitude
-                val deg = value * (PI / 180)
-                this.x = m * cos(deg)
-                this.y = m * sin(deg)
+            val m = this.magnitude
+            val deg = value * (PI / 180)
+            this.x = m * cos(deg)
+            this.y = m * sin(deg)
         }
 
     // / ---- Math ---- ///

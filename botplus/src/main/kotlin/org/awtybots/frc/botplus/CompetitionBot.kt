@@ -8,39 +8,39 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler
 
 open class CompetitionBot : TimedRobot() {
 
-        private val autonSelector = SendableChooser<Command>()
-        private var autonCommand: Command? = null
+    private val autonSelector = SendableChooser<Command>()
+    private var autonCommand: Command? = null
 
-        private val logger = Logger("CompetitionBot")
+    private val logger = Logger("CompetitionBot")
 
-        override fun robotInit() {
-                addAutonOptions()
-                SmartDashboard.putData(autonSelector)
-        }
+    override fun robotInit() {
+        addAutonOptions()
+        SmartDashboard.putData(autonSelector)
+    }
 
-        override fun robotPeriodic() = CommandScheduler.getInstance().run()
+    override fun robotPeriodic() = CommandScheduler.getInstance().run()
 
-        override fun disabledInit() = Logger.saveToFile()
+    override fun disabledInit() = Logger.saveToFile()
 
-        // auton
+    // auton
 
-        fun addAutonOption(name: String, command: Command) = autonSelector.addOption(name, command)
+    fun addAutonOption(name: String, command: Command) = autonSelector.addOption(name, command)
 
-        fun addAutonDefault(name: String, command: Command) = autonSelector.setDefaultOption(name, command)
+    fun addAutonDefault(name: String, command: Command) = autonSelector.setDefaultOption(name, command)
 
-        open fun addAutonOptions() = logger.warn("Override the addAutonOptions() method in CompetitionBot!")
+    open fun addAutonOptions() = logger.warn("Override the addAutonOptions() method in CompetitionBot!")
 
-        override fun autonomousInit() {
-                autonCommand = autonSelector.getSelected()
-                autonCommand?.schedule()
-        }
+    override fun autonomousInit() {
+        autonCommand = autonSelector.getSelected()
+        autonCommand?.schedule()
+    }
 
-        // teleop
+    // teleop
 
-        open fun bindIO() = logger.warn("Override the bindIO() method in CompetitionBot!")
+    open fun bindIO() = logger.warn("Override the bindIO() method in CompetitionBot!")
 
-        override fun teleopInit() {
-                autonCommand?.cancel()
-                bindIO()
-        }
+    override fun teleopInit() {
+        autonCommand?.cancel()
+        bindIO()
+    }
 }

@@ -16,25 +16,25 @@ class Flywheel(
     efficiency: Double = 0.95
 ) {
 
-        /*
+    /*
 
-        MATH EXPLANATION
+    MATH EXPLANATION
 
-        factor = gear ratio * flywheel circumference * efficiency / 60 / 2
-        ball velocity = motor RPM * factor
+    factor = gear ratio * flywheel circumference * efficiency / 60 / 2
+    ball velocity = motor RPM * factor
 
-        */
+    */
 
-        private val factor = motor.gearRatio * (flywheelRadius * PI * 2.0) / 60.0 * efficiency / 2.0
+    private val factor = motor.gearRatio * (flywheelRadius * PI * 2.0) / 60.0 * efficiency / 2.0
 
-        val maxBallVelocity = motor.specs.freeSpeed * factor
+    val maxBallVelocity = motor.specs.freeSpeed * factor
 
-        /**
-         * Finds the motor RPM necessary to launch a ball at a given velocity.
-         *
-         * @param[velocity] a Vector2 with speeds for x and y (meters/second)
-         *
-         * @return the motor RPM (revolutions per minute)
-         */
-        fun ballVelocityToMotorRpm(velocity: Velocity): Double = velocity.magnitude / factor
+    /**
+     * Finds the motor RPM necessary to launch a ball at a given velocity.
+     *
+     * @param[velocity] a Vector2 with speeds for x and y (meters/second)
+     *
+     * @return the motor RPM (revolutions per minute)
+     */
+    fun ballVelocityToMotorRpm(velocity: Velocity): Double = velocity.magnitude / factor
 }
