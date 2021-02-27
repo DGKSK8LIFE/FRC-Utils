@@ -4,12 +4,12 @@ An FRC library made by AwtyBots (FRC team 5829). Any team is welcome to use or c
 
 ## Features
 
-- better Xbox controller interface
-- drivetrain boilerplate
-- projectile motion simulation (with drag)
-- flywheel math
-- better Limelight interface
-- vision target math
+- Improved Xbox controller interface
+- Drivetrain boilerplate
+- Projectile motion simulation (with drag)
+- Flywheel math
+- Better Limelight interface
+- Vision target math
 
 ## Sample Usage
 
