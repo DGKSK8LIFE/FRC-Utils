@@ -30,8 +30,6 @@ An FRC library made by AwtyBots (FRC Team 5829). Any team is welcome to use and/
 ### Subsystems
 
 - [Drivetrain Subsystem](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/AutoAim.java)
-- [Indexer Tower Subsystem](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/ReverseTower.java)
-- [Intake Subsystem](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/ToggleIntake.jav>a)
 
 ### Misc
 
