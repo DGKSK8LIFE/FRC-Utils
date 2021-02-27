@@ -24,5 +24,5 @@ if [[ $(echo $illegal_files | wc -l) != 1 ]]; then
 fi
 
 # If there are whitespace errors, print the offending file names and fail.
-echo "Checking for spaces at ends of lines"
-exec git diff-index --check --cached $against --
+echo "Removing spaces at ends of lines"
+exec find . -type f -print0 | xargs -0 perl -pi -e 's/ +$//'
