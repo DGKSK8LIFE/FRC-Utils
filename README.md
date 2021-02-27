@@ -1,6 +1,6 @@
 # FRC-Utils
 
-An FRC library made by AwtyBots (FRC team 5829). Any team is welcome to use or contribute to this code.
+An FRC library made by AwtyBots (FRC Team 5829). Any team is welcome to use and/or contribute to this code.
 
 ## Features
 
