@@ -9,7 +9,7 @@ An FRC library made by AwtyBots (FRC Team 5829). Any team is welcome to use and/
 - Projectile motion simulation (with drag)
 - Flywheel math
 - Better Limelight interface
-- Vision target math
+- Vision target
 
 ## Sample Usage
 
