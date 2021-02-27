@@ -2,6 +2,7 @@
 plugins {
   id "java-library"
   id "org.jetbrains.kotlin.jvm" version "1.4.20"
+  id 'org.jlleitschuh.gradle.ktlint' version '9.2.1'
   id "edu.wpi.first.GradleRIO" version "2021.2.2"
 }
 
@@ -11,7 +12,7 @@ repositories {
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
 
 dependencies {
@@ -32,10 +33,11 @@ dependencies {
 version = '0.3.0'
 
 tasks.named('jar') {
-    manifest {
-        attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version)
-    }
+  //destinationDir.set("$rootDir")
+  manifest {
+    attributes('Implementation-Title': project.name,
+               'Implementation-Version': project.version)
+  }
 }
 
 /// ---- Git Hooks ---- ///

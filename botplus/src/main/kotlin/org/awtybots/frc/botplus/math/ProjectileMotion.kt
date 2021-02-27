@@ -1,6 +1,6 @@
 package org.awtybots.frc.botplus.math
 
-import kotlin.math.*
+import kotlin.math.PI
 
 typealias Force = Vector2
 typealias Acceleration = Vector2
@@ -27,100 +27,100 @@ class Simulation(
     val debugMode: Boolean = false
 ) {
 
-    /**
-     * Finds the optimal launch velocity to reach the specified goal position.
-     *
-     * @param[goalPosition] the goal position of the launch as a 2-dimensional vector (meters); x is horizontal distance and y is altitude
-     *
-     * @return the optimal launch velocity to reach the specified goal position (or null if impossible)
-     */
-    fun findOptimalLaunchVelocity(goalPosition: Position): Velocity? {
-        var maxVelocity: Velocity = Velocity(r = maxSpeed, theta = launchAngle)
-        var minVelocity: Velocity = Velocity()
+        /**
+         * Finds the optimal launch velocity to reach the specified goal position.
+         *
+         * @param[goalPosition] the goal position of the launch as a 2-dimensional vector (meters); x is horizontal distance and y is altitude
+         *
+         * @return the optimal launch velocity to reach the specified goal position (or null if impossible)
+         */
+        fun findOptimalLaunchVelocity(goalPosition: Position): Velocity? {
+                var maxVelocity: Velocity = Velocity(r = maxSpeed, theta = launchAngle)
+                var minVelocity: Velocity = Velocity()
 
-        val resultYMax = runSimulation(goalPosition, maxVelocity)
-        if (resultYMax < goalPosition.y) return null
+                val resultYMax = runSimulation(goalPosition, maxVelocity)
+                if (resultYMax < goalPosition.y) return null
 
-        // binary search for goldilocks velocity
-        // uncertainty on this velocity is +/- maxVelocity / (2 ^ simulationIterations)
-        repeat(simulationIterations) {
-            val middleVelocity = (minVelocity + maxVelocity) / 2.0
-            val resultY = runSimulation(goalPosition, middleVelocity)
-            if (resultY > goalPosition.y) {
-                maxVelocity = middleVelocity
-            } else {
-                minVelocity = middleVelocity
-            }
+                // binary search for goldilocks velocity
+                // uncertainty on this velocity is +/- maxVelocity / (2 ^ simulationIterations)
+                repeat(simulationIterations) {
+                        val middleVelocity = (minVelocity + maxVelocity) / 2.0
+                        val resultY = runSimulation(goalPosition, middleVelocity)
+                        if (resultY > goalPosition.y) {
+                                maxVelocity = middleVelocity
+                        } else {
+                                minVelocity = middleVelocity
+                        }
+                }
+
+                return (minVelocity + maxVelocity) / 2.0
         }
 
-        return (minVelocity + maxVelocity) / 2.0
-    }
+        private fun runSimulation(goalPosition: Position, launchVelocity: Velocity): Double {
+                var position = Position()
+                var lastPosition = Position()
+                var velocity = launchVelocity
+                var time = 0.0
 
-    private fun runSimulation(goalPosition: Position, launchVelocity: Velocity): Double {
-        var position = Position()
-        var lastPosition = Position()
-        var velocity = launchVelocity
-        var time = 0.0
+                debugln()
+                debugln("LAUNCH @ $velocity")
+                debugln()
+                while (position.x < goalPosition.x && velocity.x > 0 && time < 5.0) {
+                        lastPosition = position.clone()
+                        position += velocity * simulationStep
 
-        debugln()
-        debugln("LAUNCH @ ${velocity}")
-        debugln()
-        while (position.x < goalPosition.x && velocity.x > 0 && time < 5.0) {
-            lastPosition = position.clone()
-            position += velocity * simulationStep
+                        val netForce: Force = gravityForce + calculateDragForce(velocity)
+                        val acceleration: Acceleration = netForce / ballMass
 
-            val netForce: Force = gravityForce + calculateDragForce(velocity)
-            val acceleration: Acceleration = netForce / ballMass
+                        velocity += acceleration * simulationStep
+                        time += simulationStep
 
-            velocity += acceleration * simulationStep
-            time += simulationStep
+                        debugln("time: ${time}s")
+                        debugln("pos: $position")
+                        debugln("vel: $velocity")
+                        debugln("acc: $acceleration")
+                        debugln("net: $netForce")
+                        debugln()
+                }
 
-            debugln("time: ${time}s")
-            debugln("pos: ${position}")
-            debugln("vel: ${velocity}")
-            debugln("acc: ${acceleration}")
-            debugln("net: ${netForce}")
-            debugln()
+                if (position.x >= goalPosition.x) {
+                        val alpha = (goalPosition.x - lastPosition.x) / (position.x - lastPosition.x)
+                        val intersectY = (position.y - lastPosition.y) * alpha + lastPosition.y
+                        debugln("intersects goal X at Y $intersectY")
+
+                        return intersectY
+                }
+
+                return -1.0
         }
 
-        if(position.x >= goalPosition.x) {
-            val alpha = (goalPosition.x - lastPosition.x) / (position.x - lastPosition.x)
-            val intersectY = (position.y - lastPosition.y) * alpha + lastPosition.y
-            debugln("intersects goal X at Y ${intersectY}")
+        // GRAVITY
+        val g = -9.81
+        val gravityForce = Force(0.0, ballMass * g)
 
-            return intersectY
+        // DRAG
+        // Drag Force = 1/2 * p * C * A * v^2
+
+        // p = density of fluid
+        val dragP = 1.225
+        // C = drag coefficient (might need to be measured)
+        val dragC = 0.47
+        // A = cross sectional area
+        val dragA = ballRadius * ballRadius * PI
+
+        // Drag Force = M * v^2
+        // M = 1/2 * p * C * A
+        val dragM = 0.5 * dragP * dragC * dragA
+
+        private fun calculateDragForce(velocity: Velocity): Force {
+                val v = velocity.magnitude
+                val dragForceMagnitude = dragM * v * v
+                val dragForceTheta = velocity.theta + 180
+                return Force(r = dragForceMagnitude, theta = dragForceTheta)
         }
 
-        return -1.0
-    }
-
-    // GRAVITY
-    val g = -9.81
-    val gravityForce = Force(0.0, ballMass * g)
-
-    // DRAG
-    // Drag Force = 1/2 * p * C * A * v^2
-
-    // p = density of fluid
-    val dragP = 1.225
-    // C = drag coefficient (might need to be measured)
-    val dragC = 0.47
-    // A = cross sectional area
-    val dragA = ballRadius * ballRadius * PI
-
-    // Drag Force = M * v^2
-    // M = 1/2 * p * C * A
-    val dragM = 0.5 * dragP * dragC * dragA
-
-    private fun calculateDragForce(velocity: Velocity): Force {
-        val v = velocity.magnitude
-        val dragForceMagnitude = dragM * v * v
-        val dragForceTheta = velocity.theta + 180
-        return Force(r = dragForceMagnitude, theta = dragForceTheta)
-    }
-
-    private fun debugln() = debugln("")
-    private fun debugln(any: Any) {
-        if(debugMode) println(any)
-    }
+        private fun debugln() = debugln("")
+        private fun debugln(any: Any) {
+                if (debugMode) println(any)
+        }
 }
