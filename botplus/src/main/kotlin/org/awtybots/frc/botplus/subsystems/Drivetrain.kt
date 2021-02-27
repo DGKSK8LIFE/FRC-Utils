@@ -19,7 +19,7 @@ open class Drivetrain<T : Motor>(
         val allMotors = MotorGroup(leftMotors.motorList + rightMotors.motorList, config)
         allMotors.motorList.forEach { motor ->
             motor.motorController.configFactoryDefault()
-            motor.motorController.configSelectedFeedbackSensor(config.kSelectedSensor)
+            motor.motorController.configSelectedFeedbackSensor(motor.specs.feedbackDevice)
             motor.motorController.setNeutralMode(NeutralMode.Coast)
             motor.motorController.configOpenloopRamp(1.0 / config.kPercentAccelerationMax)
         }
@@ -55,6 +55,7 @@ open class Drivetrain<T : Motor>(
         leftMotors.motorList.forEach { m -> m.motorController.setSelectedSensorPosition(0) }
         rightMotors.motorList.forEach { m -> m.motorController.setSelectedSensorPosition(0) }
     }
+
     private fun outputDeadzone(x: Double): Double {
         return if (abs(x * config.kPercentMax) < config.kPercentMin)
             0.0

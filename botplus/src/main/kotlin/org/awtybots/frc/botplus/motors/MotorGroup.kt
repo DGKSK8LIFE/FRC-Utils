@@ -52,15 +52,7 @@ class MotorGroup<T : Motor>(
             drivePID()
     }
 
-    private fun getWheelVelocity() =
-            humanizeVelocity(motorList[0].motorController.getSelectedSensorVelocity().toDouble())
+    private fun getWheelVelocity() = motorList[0].revsPerSecond * (config.kWheelDiameter * PI)
 
-    private fun getWheelDistance() =
-            humanizeDistance(motorList[0].motorController.getSelectedSensorPosition().toDouble())
-
-    private fun humanizeVelocity(nativeVelocity: Double): Double =
-            nativeVelocity / 2048.0 * 10.0 * (config.kWheelDiameter * PI)
-
-    private fun humanizeDistance(nativeDistance: Double): Double =
-            nativeDistance / 2048.0 * 10.0 * (config.kWheelDiameter * PI)
+    private fun getWheelDistance() = motorList[0].revsCompleted * (config.kWheelDiameter * PI)
 }
