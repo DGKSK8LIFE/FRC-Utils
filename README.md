@@ -11,6 +11,16 @@ An FRC library made by AwtyBots (FRC team 5829). Any team is welcome to use or c
 - better Limelight interface
 - vision target math
 
-## How to incorporate the library in your code
+## Sample Usage
 
-instructions coming soon...
+### Commands
+
+### Config
+
+### Math
+
+### Motors
+
+### Sensors
+
+### Subsystems
