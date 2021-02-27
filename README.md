@@ -19,13 +19,9 @@ An FRC library made by AwtyBots (FRC team 5829). Any team is welcome to use or c
 - [Command Base](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/AutoAim.java)
 - [Analog Input Command](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/TeleopDrive.java)
 
-### Config
-
 ### Math
 
 - [Vector2](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/TeleopDrive.java)
-
-### Motors
 
 ### Sensors
 
@@ -35,7 +31,7 @@ An FRC library made by AwtyBots (FRC team 5829). Any team is welcome to use or c
 
 - [Drivetrain Subsystem](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/AutoAim.java)
 - [Indexer Tower Subsystem](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/ReverseTower.java)
-- [Intake Subsystem](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/ToggleIntake.java)
+- [Intake Subsystem](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/commands/ToggleIntake.jav>a)
 
 ### Misc
 
