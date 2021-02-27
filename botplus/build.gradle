@@ -30,7 +30,7 @@ dependencies {
 }
 /// ------ End No touchy ------ ///
 
-version = 'v0.3.1'
+version = 'v0.3.2'
 
 java {
   withSourcesJar()
