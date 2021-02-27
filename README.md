@@ -15,6 +15,8 @@ An FRC library made by AwtyBots (FRC team 5829). Any team is welcome to use or c
 
 ### Commands
 
+- [Controller](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/Robot.java)
+
 ### Config
 
 ### Math
@@ -22,5 +24,7 @@ An FRC library made by AwtyBots (FRC team 5829). Any team is welcome to use or c
 ### Motors
 
 ### Sensors
+
+- [Limelight](https://github.com/awtybots/FRC-2021/blob/mekhas-branch/src/main/java/frc/robot/Robot.java)
 
 ### Subsystems
