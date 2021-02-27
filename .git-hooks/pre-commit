@@ -25,4 +25,4 @@ fi
 
 # If there are whitespace errors, print the offending file names and fail.
 echo "Removing spaces at ends of lines"
-#exec find . -type f -print0 | xargs -0 perl -pi -e 's/ +$//'
+exec find botplus/src -type f -print0 | xargs -0 perl -pi -e 's/ +$//'
