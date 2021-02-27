@@ -9,3 +9,4 @@ build/
 bin/
 logs/
 *.code-workspace
+.github/workflows/gradle-test-pr.yml
