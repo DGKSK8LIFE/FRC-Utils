@@ -32,8 +32,11 @@ dependencies {
 
 version = '0.3.0'
 
-tasks.named('jar') {
-  //destinationDir.set("$rootDir")
+java {
+  withSourcesJar()
+}
+
+jar {
   manifest {
     attributes('Implementation-Title': project.name,
                'Implementation-Version': project.version)
